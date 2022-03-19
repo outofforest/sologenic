@@ -5,30 +5,31 @@ import (
 	"math/rand"
 
 	"github.com/outofforest/sologenic/cache/helpers"
-	"github.com/outofforest/sologenic/cache/supply"
+	"github.com/outofforest/sologenic/cache/supply/types"
 )
 
-func New() supply.Provider {
+// New returns new individual provider
+func New() types.Provider {
 	return &provider{}
 }
 
 type provider struct {
 }
 
-func (p *provider) Fetchers(pairs []supply.TokenPair) []supply.FetchFn {
-	res := make([]supply.FetchFn, 0, 2*len(pairs))
+func (p *provider) Fetchers(pairs []types.TokenPair) []types.FetchFn {
+	res := make([]types.FetchFn, 0, 2*len(pairs))
 	for _, p := range pairs {
-		res = append(res, fetchFn(p, supply.BidPriceType), fetchFn(p, supply.AskPriceType))
+		res = append(res, fetchFn(p, types.BidPriceType), fetchFn(p, types.AskPriceType))
 	}
 	return res
 }
 
-func fetchFn(pair supply.TokenPair, priceType supply.PriceType) supply.FetchFn {
-	return func(ctx context.Context) ([]supply.ExchangeRate, error) {
+func fetchFn(pair types.TokenPair, priceType types.PriceType) types.FetchFn {
+	return func(ctx context.Context) ([]types.ExchangeRate, error) {
 		if err := helpers.Wait(ctx); err != nil {
 			return nil, err
 		}
-		return []supply.ExchangeRate{
+		return []types.ExchangeRate{
 			{
 				Pair:  pair,
 				Type:  priceType,

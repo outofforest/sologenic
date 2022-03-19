@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// Wait adds delay to fake http queries
 func Wait(ctx context.Context) error {
 	select {
 	case <-ctx.Done():
