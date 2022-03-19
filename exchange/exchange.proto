@@ -8,10 +8,10 @@ message Auth {
 }
 
 enum OrderDirection {
-  // Used to sell base token and buy quote token at bid price, e.g.: for BTC/ETH pair you exchange BTC to ETH.
+  // Used to sell base token and buy quote token at bid price, e.g.: for BTCETH pair you exchange BTC to ETH.
   SELL = 0;
 
-  // Used to buy base token and sell quote token at ask price, e.g.: for BTC/ETH pair you exchange ETH to BTC.
+  // Used to buy base token and sell quote token at ask price, e.g.: for BTCETH pair you exchange ETH to BTC.
   BUY = 1;
 }
 
@@ -56,7 +56,7 @@ message Token {
 
 // Order describes a conversion to execute
 message Order {
-  // Name of the pair to trade, e.g.: BTC/ETH
+  // Name of the pair to trade, e.g.: BTCETH
   string pair = 1;
 
   // Is user willing to sell or buy base token?
@@ -74,7 +74,7 @@ message Order {
 
 // Rate describes conversion rate for token pair
 message Rate {
-  // Name of the pair. It's here just for convenience and is always equal to "<base_token.symbol>/<quote_token.symbol>"
+  // Name of the pair. It's here just for convenience and is always equal to "<base_token.symbol><quote_token.symbol>"
   string pair = 1;
 
   // Specification of base token
