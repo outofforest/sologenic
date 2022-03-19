@@ -1,0 +1,135 @@
+syntax = "proto3";
+
+option go_package = "./generated";
+
+message Auth {
+  // Authorization token.
+  string session_token = 1;
+}
+
+enum OrderDirection {
+  // Used to sell base token and buy quote token at bid price, e.g.: for BTC/ETH pair you exchange BTC to ETH.
+  SELL = 0;
+
+  // Used to buy base token and sell quote token at ask price, e.g.: for BTC/ETH pair you exchange ETH to BTC.
+  BUY = 1;
+}
+
+enum OrderType {
+  // Execute order immediately using the current market price.
+  MARKET = 0;
+
+  // Execute pending order once the market price meets your expectation.
+  LIMIT = 1;
+}
+
+enum ResultType {
+  // Operation succeeded.
+  OK = 0;
+
+  // ListRates operation returned no content, e.g.: passed page is greater than or equal to total_pages.
+  EMPTY = 1;
+
+  // User is not authorized to execute the operation.
+  ACCESS_DENIED = 2;
+
+  // User passed invalid parameters.
+  BAD_REQUEST = 3;
+
+  // Order can't be placed because account balance is to low.
+  BALANCE_EXCEEDED = 4;
+
+  // Error occurred.
+  FAILURE = 5;
+}
+
+// Token describes traded token
+message Token {
+  // Symbol of the token, e.g.: ETH, BTC.
+  string symbol = 1;
+
+  // Number of decimal places defined for a token.
+  // Whenever uint64 price is used in other messages, it should be divided by 10^decimal_places
+  // to get human-friendly value.
+  uint32 decimal_places = 2;
+}
+
+// Order describes a conversion to execute
+message Order {
+  // Name of the pair to trade, e.g.: BTC/ETH
+  string pair = 1;
+
+  // Is user willing to sell or buy base token?
+  OrderDirection direction = 2;
+
+  // Should order be executed at market price or with a limit?
+  OrderType type = 3;
+
+  // Execution price, valid for limit order only
+  uint64 price = 4;
+
+  // Pending order is canceled after this timestamp
+  uint64 valid_until = 5;
+}
+
+// Rate describes conversion rate for token pair
+message Rate {
+  // Name of the pair. It's here just for convenience and is always equal to "<base_token.symbol>/<quote_token.symbol>"
+  string pair = 1;
+
+  // Specification of base token
+  Token base_token = 2;
+
+  // Specification of quote token
+  Token quote_token = 3;
+
+  // Highest price user may sell base token for, specified in quote token
+  uint64 bid_price = 4;
+
+  // Lowest price user may buy base token for, specified in quote token
+  uint64 ask_price = 5;
+
+  // Time when the rate was collected
+  uint64 timestamp = 6;
+}
+
+// Result describes the result of operation
+message Result {
+  // Result code
+  Result result = 1;
+
+  // Human-readable details
+  string description = 2;
+}
+
+message OrderRequest {
+  // Auth info
+  Auth auth = 1;
+
+  // Batch of orders to place
+  repeated Order orders = 2;
+}
+
+message RateRequest {
+  // Page number, valid values: [0, total_pages)
+  uint32 page = 1;
+}
+
+message RateResponse {
+  // Result of operation
+  Result result = 1;
+
+  // Total number of available pages
+  uint32 total_pages = 2;
+
+  // Exchange rates
+  repeated Rate rates = 3;
+}
+
+service Exchange {
+  // Lists exchange rates
+  rpc ListRates(RateRequest) returns (RateResponse);
+
+  // Adds orders to order books
+  rpc PlaceOrder(OrderRequest) returns (Result);
+}
