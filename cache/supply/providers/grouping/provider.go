@@ -8,6 +8,26 @@ import (
 	"github.com/outofforest/sologenic/cache/supply/types"
 )
 
+// Grouping provider is a fake implementation of external service delivering exchange rates.
+// The logic here mocks the service which is able to deliver rates for all the requested pairs containing the same base token.
+// Assuming we want to query for these pairs:
+// - BTCETH
+// - USDETH
+// - USDBTC
+// they may be grouped this way:
+// - BTC
+//   - BTCETH
+// - USD
+//   - USDETH
+//   - USDBTC
+// to get bid prices, and this way to get ask prices:
+// - ETH
+//   - ETHBTC
+//   - ETHUSD
+// - BTC
+//   - BTCUSD
+// meaning that only 4 queries have to be sent instead of 6.
+
 // New returns new grouping provider
 func New() types.Provider {
 	return &provider{}

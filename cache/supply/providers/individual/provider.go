@@ -8,6 +8,18 @@ import (
 	"github.com/outofforest/sologenic/cache/supply/types"
 )
 
+// Individual provider is a fake implementation of external service delivering exchange rates.
+// The logic here mocks the service which is able to deliver only one rate per query.
+// Assuming we want to query for these pairs:
+// - BTCETH
+// - USDETH
+// - USDBTC
+// separate query for each one has to be sent to get bid prices. To get ask prices we have to query for these pairs:
+// - ETHBTC
+// - ETHUSD
+// - BTCUSD
+// meaning that 6 queries have to be sent in total.
+
 // New returns new individual provider
 func New() types.Provider {
 	return &provider{}

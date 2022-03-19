@@ -7,3 +7,10 @@
 * call `go generate` from command line to generate code
 * generated code will be in [./exchange/generated/exchange.pb.go](./exchange/generated/exchange.pb.go)
 * generated code is git-ignored
+
+## Task A.2
+
+* source code is in [./cache](./cache)
+* logic is in [./cache/cmd/main.go](./cache/cmd/main.go)
+* two fake providers are implemented in [./cache/supply/providers/grouping/provider.go](./cache/supply/providers/grouping/provider.go) and [./cache/supply/providers/individual/provider.go](./cache/supply/providers/individual/provider.go)
+* to run it call `go run ./cache/cmd`
