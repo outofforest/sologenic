@@ -14,3 +14,6 @@
 * logic is in [./cache/cmd/main.go](./cache/cmd/main.go)
 * two fake providers are implemented in [./cache/supply/providers/grouping/provider.go](./cache/supply/providers/grouping/provider.go) and [./cache/supply/providers/individual/provider.go](./cache/supply/providers/individual/provider.go)
 * to run it call `go run ./cache/cmd`
+
+## Task B
+* please read [./freeze/doc.md](./freeze/doc.md)
