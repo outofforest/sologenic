@@ -7,6 +7,7 @@
 ## Configuration
 
 * Reference to keeper of `bank` module
+* Module requires `Staking` permission
 
 ## State
 
@@ -76,3 +77,4 @@ Basic operation:
 
 ## Additional features
 * transactions for updating addresses having permissions to (un)freeze balances
+

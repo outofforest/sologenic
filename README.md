@@ -7,6 +7,7 @@
 * call `go generate` from command line to generate code
 * generated code will be in [./exchange/generated/exchange.pb.go](./exchange/generated/exchange.pb.go)
 * generated code is git-ignored
+* I haven't added endpoint for placing single order because this is just a special case of sending a batch of orders 
 
 ## Task A.2
 
