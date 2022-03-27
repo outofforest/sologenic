@@ -1,5 +1,8 @@
 # Sologenic
 
+This is a home assignment task I completed during one of recruitment processes.
+Task description is available in [./doc/description.pdf](./doc/description.pdf).
+
 ## Task A.1
 
 * proto spec is in [./exchange/exchange.proto](./exchange/exchange.proto)
